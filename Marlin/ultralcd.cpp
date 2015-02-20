@@ -460,20 +460,20 @@ static void lcd_tune_menu()
     MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_NOZZLE, &target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
 #endif
 #if TEMP_SENSOR_1 != 0
-	MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_NOZZLE " 2", &target_temperature[1], 0, HEATER_1_MAXTEMP - 15);
+    MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_NOZZLE " 2", &target_temperature[1], 0, HEATER_1_MAXTEMP - 15);
 #endif
 #if TEMP_SENSOR_2 != 0
-	MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_NOZZLE " 3", &target_temperature[2], 0, HEATER_2_MAXTEMP - 15);
+    MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_NOZZLE " 3", &target_temperature[2], 0, HEATER_2_MAXTEMP - 15);
 #endif
 #if TEMP_SENSOR_3 != 0
-	MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_NOZZLE " 4", &target_temperature[3], 0, HEATER_3_MAXTEMP - 15);
+    MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_NOZZLE " 4", &target_temperature[3], 0, HEATER_3_MAXTEMP - 15);
 #endif
 
 
 #if TEMP_SENSOR_BED != 0
-	MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_BED, &target_temperature_bed, 0, BED_MAXTEMP - 15);
+    MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_BED, &target_temperature_bed, 0, BED_MAXTEMP - 15);
 #endif
-	MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED, &fanSpeed, 0, 255);
+    MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED, &fanSpeed, 0, 255);
     MENU_ITEM_EDIT(int3, MSG_FLOW, &extrudemultiply, 10, 999);
     MENU_ITEM_EDIT(int3, MSG_FLOW " 0", &extruder_multiply[0], 10, 999);
 #if TEMP_SENSOR_1 != 0
@@ -994,14 +994,14 @@ static void lcd_control_volumetric_menu()
 
 	MENU_ITEM_EDIT_CALLBACK(bool, MSG_VOLUMETRIC_ENABLED, &volumetric_enabled, calculate_volumetric_multipliers);
 
-	if (volumetric_enabled) {
-		MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float43, MSG_FILAMENT_SIZE_EXTRUDER_0, &filament_size[0], 1.5, 3.25, calculate_volumetric_multipliers);
+  if (volumetric_enabled) {
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float43, MSG_FILAMENT_SIZE_EXTRUDER_0, &filament_size[0], 1.5, 3.25, calculate_volumetric_multipliers);
 #if EXTRUDERS > 1
-		MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float43, MSG_FILAMENT_SIZE_EXTRUDER_1, &filament_size[1], 1.5, 3.25, calculate_volumetric_multipliers);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float43, MSG_FILAMENT_SIZE_EXTRUDER_1, &filament_size[1], 1.5, 3.25, calculate_volumetric_multipliers);
 #if EXTRUDERS > 2
-		MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float43, MSG_FILAMENT_SIZE_EXTRUDER_2, &filament_size[2], 1.5, 3.25, calculate_volumetric_multipliers);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float43, MSG_FILAMENT_SIZE_EXTRUDER_2, &filament_size[2], 1.5, 3.25, calculate_volumetric_multipliers);
 #if EXTRUDERS > 3
-		MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float43, MSG_FILAMENT_SIZE_EXTRUDER_3, &filament_size[3], 1.5, 3.25, calculate_volumetric_multipliers);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float43, MSG_FILAMENT_SIZE_EXTRUDER_3, &filament_size[3], 1.5, 3.25, calculate_volumetric_multipliers);
 #endif //EXTRUDERS > 3
 #endif //EXTRUDERS > 2
 #endif //EXTRUDERS > 1
@@ -1359,36 +1359,36 @@ void lcd_update()
 			int32_t encoderMultiplier = 1;
 
 #ifdef ENCODER_RATE_MULTIPLIER
-			if (encoderRateMultiplierEnabled)
-			{
-				int32_t encoderMovementSteps = abs(encoderDiff) / ENCODER_PULSES_PER_STEP;
+      if (encoderRateMultiplierEnabled)
+      {
+        int32_t encoderMovementSteps = abs(encoderDiff) / ENCODER_PULSES_PER_STEP;
 
-				if (lastEncoderMovementMillis != 0)
-				{
-					// Note that the rate is always calculated between to passes through the 
-					// loop and that the abs of the encoderDiff value is tracked.
-					float encoderStepRate =
-						(float)(encoderMovementSteps) / ((float)(millis() - lastEncoderMovementMillis)) * 1000.0;
+        if (lastEncoderMovementMillis != 0)
+        {
+          // Note that the rate is always calculated between to passes through the 
+          // loop and that the abs of the encoderDiff value is tracked.
+          float encoderStepRate =
+            (float)(encoderMovementSteps) / ((float)(millis() - lastEncoderMovementMillis)) * 1000.0;
 
-					if (encoderStepRate >= ENCODER_100X_STEPS_PER_SEC)
-					{
-						encoderMultiplier = 100;
-					}
-					else if (encoderStepRate >= ENCODER_10X_STEPS_PER_SEC)
-					{
-						encoderMultiplier = 10;
-					}
+          if (encoderStepRate >= ENCODER_100X_STEPS_PER_SEC)
+          {
+            encoderMultiplier = 100;
+          }
+          else if (encoderStepRate >= ENCODER_10X_STEPS_PER_SEC)
+          {
+            encoderMultiplier = 10;
+          }
 
 #ifdef ENCODER_RATE_MULTIPLIER_DEBUG
-					SERIAL_ECHO_START;
-					SERIAL_ECHO("Enc Step Rate: ");
-					SERIAL_ECHO(encoderStepRate);
-					SERIAL_ECHO("  Multiplier: ");
-					SERIAL_ECHO(encoderMultiplier);
-					SERIAL_ECHO("  ENCODER_10X_STEPS_PER_SEC: ");
-					SERIAL_ECHO(ENCODER_10X_STEPS_PER_SEC);
-					SERIAL_ECHO("  ENCODER_100X_STEPS_PER_SEC: ");
-					SERIAL_ECHOLN(ENCODER_100X_STEPS_PER_SEC);
+          SERIAL_ECHO_START;
+          SERIAL_ECHO("Enc Step Rate: ");
+          SERIAL_ECHO(encoderStepRate);
+          SERIAL_ECHO("  Multiplier: ");
+          SERIAL_ECHO(encoderMultiplier);
+          SERIAL_ECHO("  ENCODER_10X_STEPS_PER_SEC: ");
+          SERIAL_ECHO(ENCODER_10X_STEPS_PER_SEC);
+          SERIAL_ECHO("  ENCODER_100X_STEPS_PER_SEC: ");
+          SERIAL_ECHOLN(ENCODER_100X_STEPS_PER_SEC);
 #endif
 				}
 
@@ -1396,7 +1396,7 @@ void lcd_update()
 			}
 #endif
             lcdDrawUpdate = 1;
-			encoderPosition += (encoderDiff * encoderMultiplier) / ENCODER_PULSES_PER_STEP;
+            encoderPosition += (encoderDiff * encoderMultiplier) / ENCODER_PULSES_PER_STEP;
             encoderDiff = 0;
             timeoutToStatus = millis() + LCD_TIMEOUT_TO_STATUS;
         }
