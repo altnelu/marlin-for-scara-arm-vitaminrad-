@@ -215,13 +215,14 @@
 #define Y_HOME_RETRACT_MM 5
 #define Z_HOME_RETRACT_MM 2
 //#define QUICK_HOME  //if this is defined, if both x and y are to be homed, a diagonal move will be performed initially.
+#ifdef SCARA
+	#define QUICK_HOME //SCARA needs Quickhome
+#endif
 
 #define AXIS_RELATIVE_MODES {false, false, false, false}
-#ifdef CONFIG_STEPPERS_TOSHIBA
-#define MAX_STEP_FREQUENCY 10000 // Max step frequency for Toshiba Stepper Controllers
-#else
+
 #define MAX_STEP_FREQUENCY 40000 // Max step frequency for Ultimaker (5000 pps / half step)
-#endif
+
 //By default pololu step drivers require an active high signal. However, some high power drivers require an active low signal as step.
 #define INVERT_X_STEP_PIN false
 #define INVERT_Y_STEP_PIN false
@@ -229,14 +230,14 @@
 #define INVERT_E_STEP_PIN false
 
 //default stepper release if idle. Set to 0 to deactivate.
-#define DEFAULT_STEPPER_DEACTIVE_TIME 60
+#define DEFAULT_STEPPER_DEACTIVE_TIME 240
 
 #define DEFAULT_MINIMUMFEEDRATE       0.0     // minimum feedrate
 #define DEFAULT_MINTRAVELFEEDRATE     0.0
 
 // Feedrates for manual moves along X, Y, Z, E from panel
 #ifdef ULTIPANEL
-#define MANUAL_FEEDRATE {50*60, 50*60, 4*60, 60}  // set the speeds for manual moves (mm/min)
+#define MANUAL_FEEDRATE {50*60, 50*60, 10*60, 60}  // set the speeds for manual moves (mm/min)
 #endif
 
 //Comment to disable setting feedrate multiplier via encoder
@@ -248,8 +249,10 @@
 #define DEFAULT_MINSEGMENTTIME        20000
 
 // If defined the movements slow down when the look ahead buffer is only half full
-#define SLOWDOWN
-
+//#define SLOWDOWN
+#ifdef SCARA
+ #undef SLOWDOWN
+#endif
 // Frequency limit
 // See nophead's blog for more info
 // Not working O
@@ -351,6 +354,11 @@
       #error BABYSTEPPING only implemented for Z axis on deltabots.
     #endif
   #endif
+  
+  #ifdef SCARA
+    #error BABYSTEPPING not implemented for SCARA yet.
+  #endif
+  
 #endif
 
 // extruder advance constant (s2/mm3)
@@ -360,13 +368,13 @@
 // Hooke's law says:		force = k * distance
 // Bernoulli's principle says:	v ^ 2 / 2 + g . h + pressure / density = constant
 // so: v ^ 2 is proportional to number of steps we advance the extruder
-//#define ADVANCE
+#define ADVANCE
 
 #ifdef ADVANCE
   #define EXTRUDER_ADVANCE_K .0
 
-  #define D_FILAMENT 2.85
-  #define STEPS_MM_E 836
+  #define D_FILAMENT 1.75
+  #define STEPS_MM_E 1000
   #define EXTRUSION_AREA (0.25 * D_FILAMENT * D_FILAMENT * 3.14159)
   #define STEPS_PER_CUBIC_MM_E (axis_steps_per_unit[E_AXIS]/ EXTRUSION_AREA)
 
