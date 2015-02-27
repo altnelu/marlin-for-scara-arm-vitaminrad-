@@ -258,9 +258,9 @@ Here are some standard links for getting your machine calibrated:
 
 //12v Heatbed Mk3 12V in parallel
 //from pidautotune
-    #define  DEFAULT_bedKp 630.14
-    #define  DEFAULT_bedKi 121.71
-    #define  DEFAULT_bedKd 815.64
+//    #define  DEFAULT_bedKp 630.14
+//    #define  DEFAULT_bedKi 121.71
+//    #define  DEFAULT_bedKd 815.64
     
 // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
