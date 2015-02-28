@@ -3,6 +3,7 @@
 
 #include "boards.h"
 
+
 //===========================================================================
 //============================= Getting Started =============================
 //===========================================================================
@@ -16,6 +17,7 @@ Here are some standard links for getting your machine calibrated:
  * https://sites.google.com/site/repraplogphase/calibration-of-your-reprap
  * http://www.thingiverse.com/thing:298812
 */
+
 
 // This configuration file contains the basic settings.
 // Advanced settings can be found in Configuration_adv.h
@@ -141,7 +143,7 @@ Here are some standard links for getting your machine calibrated:
 //     #define DUMMY_THERMISTOR_998_VALUE 25
 //     #define DUMMY_THERMISTOR_999_VALUE 100
 
-#define TEMP_SENSOR_0 0
+#define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -152,8 +154,8 @@ Here are some standard links for getting your machine calibrated:
 #define MAX_REDUNDANT_TEMP_SENSOR_DIFF 10
 
 // Actual temperature must be close to target for this long before M109 returns success
-#define TEMP_RESIDENCY_TIME 10  // (seconds)
-#define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
+#define TEMP_RESIDENCY_TIME 3  // (seconds)
+#define TEMP_HYSTERESIS 2       // (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_WINDOW     1       // (degC) Window around target to start the residency timer x degC early.
 
 // The minimal temperature defines the temperature below which the heater will not be enabled It is used
@@ -209,6 +211,16 @@ Here are some standard links for getting your machine calibrated:
     #define  DEFAULT_Kp 22.2
     #define  DEFAULT_Ki 1.08
     #define  DEFAULT_Kd 114
+  
+ // Jhead MK5: From Autotune  
+  //  #define  DEFAULT_Kp 20.92
+   // #define  DEFAULT_Ki 1.51
+  //  #define  DEFAULT_Kd 72.34
+    
+ //Merlin Hotend: From Autotune  
+    #define  DEFAULT_Kp 24.5
+    #define  DEFAULT_Ki 1.72
+    #define  DEFAULT_Kd 87.73
 
 // MakerGear
 //    #define  DEFAULT_Kp 7.0
@@ -266,6 +278,7 @@ Here are some standard links for getting your machine calibrated:
 #endif // PIDTEMPBED
 
 
+
 //this prevents dangerous Extruder moves, i.e. if the temperature is under the limit
 //can be software-disabled for whatever purposes by
 #define PREVENT_DANGEROUS_EXTRUDE
@@ -274,6 +287,7 @@ Here are some standard links for getting your machine calibrated:
 
 #define EXTRUDE_MINTEMP 170
 #define EXTRUDE_MAXLENGTH (X_MAX_LENGTH+Y_MAX_LENGTH) //prevent extrusion of very large distances.
+
 
 //===========================================================================
 //============================= Thermal Runaway Protection ==================
@@ -482,7 +496,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 //If you have enabled the Bed Auto Leveling and are using the same Z Probe for Z Homing,
 //it is highly recommended you let this Z_SAFE_HOMING enabled!!!
 
-  #define Z_SAFE_HOMING   // This feature is meant to avoid Z homing with probe outside the bed area.
+ // #define Z_SAFE_HOMING   // This feature is meant to avoid Z homing with probe outside the bed area.
                           // When defined, it will:
                           // - Allow Z homing only after X and Y homing AND stepper drivers still enabled
                           // - If stepper drivers timeout, it will need X and Y homing again before Z homing
