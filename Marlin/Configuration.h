@@ -212,15 +212,15 @@ Here are some standard links for getting your machine calibrated:
     #define  DEFAULT_Ki 1.08
     #define  DEFAULT_Kd 114
   
- // Jhead MK5: From Autotune  
-  //  #define  DEFAULT_Kp 20.92
-   // #define  DEFAULT_Ki 1.51
-  //  #define  DEFAULT_Kd 72.34
-    
+// Jhead MK5: From Autotune  
+//    #define  DEFAULT_Kp 20.92
+//    #define  DEFAULT_Ki 1.51
+//    #define  DEFAULT_Kd 72.34
+
  //Merlin Hotend: From Autotune  
-    #define  DEFAULT_Kp 24.5
-    #define  DEFAULT_Ki 1.72
-    #define  DEFAULT_Kd 87.73
+//    #define  DEFAULT_Kp 24.5
+//    #define  DEFAULT_Ki 1.72
+//    #define  DEFAULT_Kd 87.73
 
 // MakerGear
 //    #define  DEFAULT_Kp 7.0
