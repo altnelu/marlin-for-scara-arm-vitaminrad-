@@ -9,7 +9,7 @@
 //===========================================================================
 /*
 Here are some standard links for getting your machine calibrated:
- * http://reprap.org/wiki/Calibration 
+ * http://reprap.org/wiki/Calibration
  * http://youtu.be/wAL9d7FgInk
  * http://calculator.josefprusa.cz
  * http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide
@@ -32,15 +32,15 @@ Here are some standard links for getting your machine calibrated:
 // You might need Z-Min endstop on SCARA-Printer to use this feature. Actually untested!
 // Uncomment to use Morgan scara mode
 #define SCARA
-#define scara_segments_per_second 120 // too much will decrease performance!
+#define scara_segments_per_second 180 // too much will decrease performance!
 // Length of inner support arm
 #define Linkage_1 122 // mm - Preprocessor cannot handle decimal points...
 // Length of outer support arm
-#define Linkage_2 122 // mm - Preprocessor cannot handle decimal points...
+#define Linkage_2 126 // mm - Preprocessor cannot handle decimal points...
 
-// SCARA tower offset (position of Tower relative to bed zero position) 
+// SCARA tower offset (position of Tower relative to bed zero position)
 // This needs to be reasonably accurate as it defines the printbed position in the SCARA space.
-#define SCARA_offset_x  60 // mm
+#define SCARA_offset_x   30 // mm
 #define SCARA_offset_y -100 // mm
 #define SCARA_RAD2DEG 57.2957795  // to convert RAD to degrees
 
@@ -124,7 +124,7 @@ Here are some standard links for getting your machine calibrated:
 // 10 is 100k RS thermistor 198-961 (4.7k pullup)
 // 11 is 100k beta 3950 1% thermistor (4.7k pullup)
 // 12 is 100k 0603 SMD Vishay NTCS0603E3104FXT (4.7k pullup) (calibrated for Makibox hot bed)
-// 13 is 100k Hisens 3950  1% up to 300°C for hotend "Simple ONE " & "Hotend "All In ONE" 
+// 13 is 100k Hisens 3950  1% up to 300°C for hotend "Simple ONE " & "Hotend "All In ONE"
 // 20 is the PT100 circuit found in the Ultimainboard V2.x
 // 60 is 100k Maker's Tool Works Kapton Bed Thermistor beta=3950
 //
@@ -138,12 +138,12 @@ Here are some standard links for getting your machine calibrated:
 // 1010 is Pt1000 with 1k pullup (non standard)
 // 147 is Pt100 with 4k7 pullup
 // 110 is Pt100 with 1k pullup (non standard)
-// 998 and 999 are Dummy Tables. They will ALWAYS read 25°C or the temperature defined below. 
+// 998 and 999 are Dummy Tables. They will ALWAYS read 25°C or the temperature defined below.
 //     Use it for Testing or Development purposes. NEVER for production machine.
 //     #define DUMMY_THERMISTOR_998_VALUE 25
 //     #define DUMMY_THERMISTOR_999_VALUE 100
 
-#define TEMP_SENSOR_0 1
+#define TEMP_SENSOR_0 0
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -155,8 +155,8 @@ Here are some standard links for getting your machine calibrated:
 
 // Actual temperature must be close to target for this long before M109 returns success
 #define TEMP_RESIDENCY_TIME 3  // (seconds)
-#define TEMP_HYSTERESIS 2       // (degC) range of +/- temperatures considered "close" to the target one
-#define TEMP_WINDOW     1       // (degC) Window around target to start the residency timer x degC early.
+#define TEMP_HYSTERESIS 2      // (degC) range of +/- temperatures considered "close" to the target one
+#define TEMP_WINDOW     1      // (degC) Window around target to start the residency timer x degC early.
 
 // The minimal temperature defines the temperature below which the heater will not be enabled It is used
 // to check that the wiring to the thermistor is not broken.
@@ -212,12 +212,12 @@ Here are some standard links for getting your machine calibrated:
 	#define  DEFAULT_Ki 3.95
 	#define  DEFAULT_Kd 79.11
 
-	// Jhead MK5: From Autotune  
+	// Jhead MK5: From Autotune
 	//    #define  DEFAULT_Kp 20.92
 	//    #define  DEFAULT_Ki 1.51
 	//    #define  DEFAULT_Kd 72.34
 
-	 //Merlin Hotend: From Autotune  
+	 //Merlin Hotend: From Autotune
 	//    #define  DEFAULT_Kp 24.5
 	//    #define  DEFAULT_Ki 1.72
 	//    #define  DEFAULT_Kd 87.73
@@ -273,7 +273,7 @@ Here are some standard links for getting your machine calibrated:
 //    #define  DEFAULT_bedKp 630.14
 //    #define  DEFAULT_bedKi 121.71
 //    #define  DEFAULT_bedKd 815.64
-		
+
 // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
 
@@ -298,15 +298,15 @@ The issue: If a thermistor come off, it will read a lower temperature than actua
 The system will turn the heater on forever, burning up the filament and anything
 else around.
 
-After the temperature reaches the target for the first time, this feature will 
-start measuring for how long the current temperature stays below the target 
+After the temperature reaches the target for the first time, this feature will
+start measuring for how long the current temperature stays below the target
 minus _HYSTERESIS (set_temperature - THERMAL_RUNAWAY_PROTECTION_HYSTERESIS).
 
 If it stays longer than _PERIOD, it means the thermistor temperature
 cannot catch up with the target, so something *may be* wrong. Then, to be on the
 safe side, the system will he halt.
 
-Bear in mind the count down will just start AFTER the first time the 
+Bear in mind the count down will just start AFTER the first time the
 thermistor temperature is over the target, so you will have no problem if
 your extruder heater takes 2 minutes to hit the target on heating.
 
@@ -356,12 +356,12 @@ your extruder heater takes 2 minutes to hit the target on heating.
 #endif
 
 // The pullups are needed if you directly connect a mechanical endswitch between the signal and ground pins.
-const bool X_MIN_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
-const bool Y_MIN_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
-const bool Z_MIN_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
+const bool X_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
+const bool Y_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
+const bool Z_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool X_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool Y_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
+const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
 //#define DISABLE_MAX_ENDSTOPS
 //#define DISABLE_MIN_ENDSTOPS
 
@@ -395,18 +395,18 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // Sets direction of endstops when homing; 1=MAX, -1=MIN
 #define X_HOME_DIR 1
 #define Y_HOME_DIR 1
-#define Z_HOME_DIR 1
+#define Z_HOME_DIR -1
 
 #define min_software_endstops true // If true, axis won't move to coordinates less than HOME_POS.
 #define max_software_endstops true // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // Travel limits after homing (units are in mm)
-#define X_MAX_POS 120
+#define X_MAX_POS 200
 #define X_MIN_POS 0
-#define Y_MAX_POS 150
+#define Y_MAX_POS 100
 #define Y_MIN_POS 0
-#define Z_MAX_POS MANUAL_Z_HOME_POS
-#define Z_MIN_POS 0
+#define Z_MAX_POS 100
+#define Z_MIN_POS MANUAL_Z_HOME_POS
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
 #define Y_MAX_LENGTH (Y_MAX_POS - Y_MIN_POS)
@@ -523,7 +523,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
 		// Has Y Offset?
 		#if Y_PROBE_OFFSET_FROM_EXTRUDER < 0
-		
+
 			#if (-(Y_PROBE_OFFSET_FROM_EXTRUDER * (AUTO_BED_LEVELING_GRID_POINTS-1)) >= (BACK_PROBE_BED_POSITION - FRONT_PROBE_BED_POSITION))
 				#error "The Y axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
 			#endif
@@ -547,23 +547,23 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
 // Manual homing switch locations:
 // For deltabots this means top and center of the Cartesian print volume.
-// For SCARA: Offset between HomingPosition and Bed X=0 / Y=0
-#define MANUAL_X_HOME_POS  60  // Centered to bed
-#define MANUAL_Y_HOME_POS 144  // Arms Extending Outward - Theta at 90 and Psi at 0 deg
-#define MANUAL_Z_HOME_POS 100  // Distance between nozzle and print surface after homing.
+// For SCARA: Effector Offset between Manual_*_Homing_Pos and Bed X=0 / Y=0
+#define MANUAL_X_HOME_POS SCARA_offset_x // Presumably centered to bed
+#define MANUAL_Y_HOME_POS (Linkage_1 + Linkage_2) + SCARA_offset_y  // Arms Extending Outward - Theta at 90 and Psi at 0 deg
+#define MANUAL_Z_HOME_POS 0 // Distance between nozzle and print surface after homing.
 
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
-#define HOMING_FEEDRATE {20*60, 20*60, 8*60, 0}  // set the homing speeds (mm/min)
+#define HOMING_FEEDRATE {10*60, 10*60, 8*60, 0}  // set the homing speeds (mm/min)
 
 // default settings
 // formula: ((steps per rev * stepping mode of motor)/360) * Gear Ratio
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {71.11, 71.11, 400, 300}  // default steps per unit for SCARA
-#define DEFAULT_MAX_FEEDRATE          {100, 100, 30, 25}        // (mm/sec)
-#define DEFAULT_MAX_ACCELERATION      {300, 300, 20, 1000}      // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
+#define DEFAULT_MAX_FEEDRATE          {200, 200, 30, 25}        // (mm/sec)
+#define DEFAULT_MAX_ACCELERATION      {600, 600, 20, 1000}      // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
-#define DEFAULT_ACCELERATION          200   // X, Y, Z and E max acceleration in mm/s^2 for printing moves
+#define DEFAULT_ACCELERATION          300   // X, Y, Z and E max acceleration in mm/s^2 for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  2000  // X, Y, Z and E max acceleration in mm/s^2 for retracts
 
 // Offset of the extruders (uncomment if using more than one and relying on firmware to position when changing).
@@ -573,7 +573,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // #define EXTRUDER_OFFSET_Y {0.0, 5.00}  // (in mm) for each extruder, offset of the hotend on the Y axis
 
 // The speed change that does not require acceleration (i.e. the software might assume it can be done instantaneously)
-#define DEFAULT_XYJERK                3    // (mm/sec)
+#define DEFAULT_XYJERK                6    // (mm/sec)
 #define DEFAULT_ZJERK                 0.4  // (mm/sec)
 #define DEFAULT_EJERK                 3    // (mm/sec)
 
@@ -782,7 +782,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // Shift register panels
 // ---------------------
 // 2 wire Non-latching LCD SR from:
-// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection 
+// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection
 
 //#define SAV_3DLCD
 #ifdef SAV_3DLCD
@@ -804,7 +804,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 		#define LCD_WIDTH 20
 		#define LCD_HEIGHT 4
 	#endif
-	
+
 #else //no panel but just LCD
 
 	#ifdef ULTRA_LCD
@@ -884,9 +884,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
  * Support for a filament diameter sensor
  * Also allows adjustment of diameter at print time (vs  at slicing)
  * Single extruder only at this point (extruder 0)
- * 
+ *
  * Motherboards
- * 34 - RAMPS1.4 - uses Analog input 5 on the AUX2 connector 
+ * 34 - RAMPS1.4 - uses Analog input 5 on the AUX2 connector
  * 81 - Printrboard - Uses Analog input 2 on the Exp1 connector (version B,C,D,E)
  * 301 - Rambo  - uses Analog input 3
  * Note may require analog pins to be defined for different motherboards
@@ -903,7 +903,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define MAX_MEASUREMENT_DELAY			    20     // delay buffer size in bytes (1 byte = 1cm)- limits maximum measurement delay allowable (must be larger than MEASUREMENT_DELAY_CM  and lower number saves RAM)
 
 //defines used in the code
-#define DEFAULT_MEASURED_FILAMENT_DIA  DEFAULT_NOMINAL_FILAMENT_DIA  // set measured to nominal initially 
+#define DEFAULT_MEASURED_FILAMENT_DIA  DEFAULT_NOMINAL_FILAMENT_DIA  // set measured to nominal initially
 
 //When using an LCD, uncomment the line below to display the Filament sensor data on the last line instead of status.  Status will appear for 5 sec.
 //#define FILAMENT_LCD_DISPLAY
