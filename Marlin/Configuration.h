@@ -34,14 +34,14 @@ Here are some standard links for getting your machine calibrated:
 #define SCARA
 #define scara_segments_per_second 180 // too much will decrease performance!
 // Length of inner support arm
-#define Linkage_1 122 // mm - Preprocessor cannot handle decimal points...
+#define Linkage_1 150 // mm - Preprocessor cannot handle decimal points...
 // Length of outer support arm
-#define Linkage_2 126 // mm - Preprocessor cannot handle decimal points...
+#define Linkage_2 150 // mm - Preprocessor cannot handle decimal points...
 
 // SCARA tower offset (position of Tower relative to bed zero position)
 // This needs to be reasonably accurate as it defines the printbed position in the SCARA space.
-#define SCARA_offset_x   30 // mm
-#define SCARA_offset_y -100 // mm
+#define SCARA_offset_x   0 // mm
+#define SCARA_offset_y -70 // mm
 #define SCARA_RAD2DEG 57.2957795  // to convert RAD to degrees
 
 #define THETA_HOMING_OFFSET 0 // calculatated from command M360 / M114
@@ -71,7 +71,7 @@ Here are some standard links for getting your machine calibrated:
 #define SERIAL_PORT 0
 
 // This determines the communication speed of the printer
-#define BAUDRATE 250000
+#define BAUDRATE 115200
 
 // This enables the serial port associated to the Bluetooth interface
 //#define BTENABLED              // Enable BT interface on AT90USB devices
@@ -79,11 +79,11 @@ Here are some standard links for getting your machine calibrated:
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-	#define MOTHERBOARD BOARD_PRINTRBOARD
+	#define MOTHERBOARD BOARD_RAMPS_13_EFB
 #endif
 
 // Define this to set a custom name for your generic Mendel,
- #define CUSTOM_MENDEL_NAME "Winston"
+ #define CUSTOM_MENDEL_NAME "Scara"
 
 // Define this to set a unique identifier for this printer, (Used by some programs to differentiate between machines)
 // You can use an online service to generate a random UUID. (eg http://www.uuidgenerator.net/version4)
@@ -338,12 +338,12 @@ your extruder heater takes 2 minutes to hit the target on heating.
 
 #ifndef ENDSTOPPULLUPS
 	// fine endstop settings: Individual pullups. will be ignored if ENDSTOPPULLUPS is defined
-	// #define ENDSTOPPULLUP_XMAX
-	// #define ENDSTOPPULLUP_YMAX
+	 #define ENDSTOPPULLUP_XMAX
+	 #define ENDSTOPPULLUP_YMAX
 	 #define ENDSTOPPULLUP_ZMAX  // open pin, inverted
 	 #define ENDSTOPPULLUP_XMIN  // open pin, inverted
 	 #define ENDSTOPPULLUP_YMIN  // open pin, inverted
-	// #define ENDSTOPPULLUP_ZMIN
+	 #define ENDSTOPPULLUP_ZMIN
 #endif
 
 #ifdef ENDSTOPPULLUPS
@@ -361,7 +361,7 @@ const bool Y_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 const bool Z_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool X_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool Y_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
+const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 //#define DISABLE_MAX_ENDSTOPS
 //#define DISABLE_MIN_ENDSTOPS
 
@@ -383,7 +383,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define DISABLE_E false // For all extruders
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 
-#define INVERT_X_DIR false
+#define INVERT_X_DIR true
 #define INVERT_Y_DIR false
 #define INVERT_Z_DIR false
 #define INVERT_E0_DIR false
@@ -393,20 +393,20 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // ENDSTOP SETTINGS:
 // Sets direction of endstops when homing; 1=MAX, -1=MIN
-#define X_HOME_DIR 1
+#define X_HOME_DIR -1
 #define Y_HOME_DIR 1
-#define Z_HOME_DIR -1
+#define Z_HOME_DIR 1
 
 #define min_software_endstops true // If true, axis won't move to coordinates less than HOME_POS.
 #define max_software_endstops true // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // Travel limits after homing (units are in mm)
-#define X_MAX_POS 200
-#define X_MIN_POS 0
-#define Y_MAX_POS 100
+#define X_MAX_POS 100
+#define X_MIN_POS -100
+#define Y_MAX_POS 200
 #define Y_MIN_POS 0
-#define Z_MAX_POS 100
-#define Z_MIN_POS MANUAL_Z_HOME_POS
+#define Z_MAX_POS MANUAL_Z_HOME_POS
+#define Z_MIN_POS 0
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
 #define Y_MAX_LENGTH (Y_MAX_POS - Y_MIN_POS)
@@ -548,20 +548,20 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 // Manual homing switch locations:
 // For deltabots this means top and center of the Cartesian print volume.
 // For SCARA: Effector Offset between Manual_*_Homing_Pos and Bed X=0 / Y=0
-#define MANUAL_X_HOME_POS SCARA_offset_x // Presumably centered to bed
-#define MANUAL_Y_HOME_POS (Linkage_1 + Linkage_2) + SCARA_offset_y  // Arms Extending Outward - Theta at 90 and Psi at 0 deg
-#define MANUAL_Z_HOME_POS 0 // Distance between nozzle and print surface after homing.
+#define MANUAL_X_HOME_POS 41 //SCARA_offset_x // Presumably centered to bed
+#define MANUAL_Y_HOME_POS -20.63 //(Linkage_1 + Linkage_2) + SCARA_offset_y  // Arms Extending Outward - Theta at 90 and Psi at 0 deg
+#define MANUAL_Z_HOME_POS 116.5 // Distance between nozzle and print surface after homing.
 
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
-#define HOMING_FEEDRATE {10*60, 10*60, 8*60, 0}  // set the homing speeds (mm/min)
+#define HOMING_FEEDRATE {20*60, 20*60, 20*60, 0}  // set the homing speeds (mm/min)
 
 // default settings
 // formula: ((steps per rev * stepping mode of motor)/360) * Gear Ratio
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {71.11, 71.11, 400, 300}  // default steps per unit for SCARA
-#define DEFAULT_MAX_FEEDRATE          {200, 200, 30, 25}        // (mm/sec)
-#define DEFAULT_MAX_ACCELERATION      {600, 600, 20, 1000}      // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {322.5, 322.5, 101.9, 400}  // default steps per unit for SCARA
+#define DEFAULT_MAX_FEEDRATE          {2000, 2000,100, 50}        // (mm/sec)
+#define DEFAULT_MAX_ACCELERATION      {6000, 6000, 400, 20000}      // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
 #define DEFAULT_ACCELERATION          300   // X, Y, Z and E max acceleration in mm/s^2 for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  2000  // X, Y, Z and E max acceleration in mm/s^2 for retracts
@@ -573,9 +573,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 // #define EXTRUDER_OFFSET_Y {0.0, 5.00}  // (in mm) for each extruder, offset of the hotend on the Y axis
 
 // The speed change that does not require acceleration (i.e. the software might assume it can be done instantaneously)
-#define DEFAULT_XYJERK                6    // (mm/sec)
+#define DEFAULT_XYJERK               10// 6    // (mm/sec)
 #define DEFAULT_ZJERK                 0.4  // (mm/sec)
-#define DEFAULT_EJERK                 3    // (mm/sec)
+#define DEFAULT_EJERK                 5//3    // (mm/sec)
 
 
 //===========================================================================
