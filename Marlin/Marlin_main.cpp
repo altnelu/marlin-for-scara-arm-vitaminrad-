@@ -3503,7 +3503,66 @@ Sigma_Exit:
 
                 }
             }
-            break;
+            break
+    case 366: // Rotate x 180 quality verification steps 
+        SERIAL_ECHOPGM(" Start"); 
+        WRITE(Y_ENABLE_PIN,LOW);
+        WRITE(Y_DIR_PIN, INVERT_Y_DIR);
+        for(float i=0; i < axis_steps_per_unit[Y_AXIS]*(90); i++) 
+        {
+        if (READ(Y_MAX_PIN) == Y_MAX_ENDSTOP_INVERTING) {
+          _delay_us(200U); // wait 1 microsecond
+          WRITE(Y_STEP_PIN, !INVERT_Y_STEP_PIN); 
+          _delay_us(1U); // wait 1 microsecond
+          WRITE(Y_STEP_PIN, INVERT_Y_STEP_PIN);
+        } else {
+          SERIAL_ECHOPGM(" stop Y= "); SERIAL_ECHOLN(i/axis_steps_per_unit[Y_AXIS]); //i=axis_steps_per_unit[Y_AXIS]*360;
+       break;
+       }
+      }
+      break;
+   case 367: // Calibrate //masor pasii de la 90 grade pana la endstop
+    //muve Y
+        WRITE(Y_ENABLE_PIN,LOW);
+        WRITE(Y_DIR_PIN, !INVERT_Y_DIR);
+       for(float i=0; i < axis_steps_per_unit[Y_AXIS]*180; i++) 
+       {
+       if (READ(Y_MAX_PIN) == Y_MAX_ENDSTOP_INVERTING) {
+          _delay_us(100U); // wait 1 microsecond
+          WRITE(Y_STEP_PIN, !INVERT_Y_STEP_PIN); 
+          _delay_us(1U); // wait 1 microsecond
+          WRITE(Y_STEP_PIN, INVERT_Y_STEP_PIN);
+       } else {
+        SERIAL_ECHOLN(i);
+          //delta[Y_AXIS] =90+(i/axis_steps_per_unit[Y_AXIS])-180; R-  -26 in loc de 156
+          delta[Y_AXIS] =90+(i/axis_steps_per_unit[Y_AXIS]);
+          SERIAL_ECHOPGM(" stop Y= "); SERIAL_ECHOLN(delta[Y_AXIS]);
+          break;
+       }       
+      }
+    //muve X
+        WRITE(X_ENABLE_PIN,LOW);
+        WRITE(X_DIR_PIN, INVERT_X_DIR);
+      for(float i=0; i < axis_steps_per_unit[X_AXIS]*180; i++) 
+      {
+       if (READ(X_MIN_PIN) == X_MIN_ENDSTOP_INVERTING) {
+          _delay_us(10U); // wait 1 microsecond
+          WRITE(X_STEP_PIN, !INVERT_X_STEP_PIN); 
+          _delay_us(1000U); // wait 1 microsecond
+          WRITE(X_STEP_PIN, INVERT_X_STEP_PIN);
+       } else {
+        SERIAL_ECHOLN(i);
+          //delta[X_AXIS] = i/axis_steps_per_unit[X_AXIS]; rez +26.68 in loc de -28.73 . Schimb semnul
+          delta[X_AXIS] = -i/axis_steps_per_unit[X_AXIS];
+          SERIAL_ECHOPGM(" stop X= "); SERIAL_ECHOLN(delta[X_AXIS]);
+          break;
+       }       
+      }
+          //cand ajung la ambele endstopuri calculez pozitia
+          calculate_SCARA_forward_Transform(delta);
+          SERIAL_ECHOPGM(" MANUAL_X_HOME_POS X= "); SERIAL_ECHOLN(delta[X_AXIS]);          
+          SERIAL_ECHOPGM(" MANUAL_Y_HOME_POS Y= "); SERIAL_ECHOLN(delta[Y_AXIS]);
+      break;
     #endif
         case 400: // M400 finish all moves
         {
